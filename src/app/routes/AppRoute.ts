@@ -7,15 +7,17 @@ import { SellerDashboardComponent } from '../pages/customer/seller/seller-dashbo
 import { BuyerDashboardComponent } from '../pages/customer/buyer/buyer-dashboard/buyer-dashboard.component';
 import { ProductsComponent } from '../pages/products/products.component';
 import { CheckoutComponent } from '../pages/customer/buyer/checkout/checkout.component';
+import { PageNotFoundComponent } from '../shared/layouts/page-not-found/page-not-found.component';
+import { redirectToLogin } from '../core/guards/auth-guard.guard';
 
 export const AppRoute: Routes = [
   {
     path: '',
-    redirectTo: '/',
+    redirectTo: '',
     pathMatch: 'full',
   },
   {
-    path: '/',
+    path: '',
     title: 'Home',
     component: HomeComponent,
   },
@@ -37,32 +39,47 @@ export const AppRoute: Routes = [
   },
   {
     path: 'auth',
-    redirectTo: '/auth/login',
     loadChildren: () => import('./AuthRoutes').then((x) => x.AuthRoutes),
+    canActivate: [redirectToLogin]
   },
   {
     path: '',
     children: [
       {
-        path: 'seller-dashboard',
-        title: 'Seller Dashboard',
-        component: SellerDashboardComponent,
+        path: 'seller',
+        children: [
+          {
+            path: 'dashboard',
+            title: 'Dashboard',
+            component: SellerDashboardComponent
+          },
+          {
+            path: 'products',
+            title: 'Products',
+            component: ProductsComponent
+          }
+        ],
       },
       {
-        path: 'seller-products',
-        title: 'Seller Products',
-        component: ProductsComponent,
-      },
-      {
-        path: 'buyer-dashboard',
-        title: 'Buyer Dashboard',
-        component: BuyerDashboardComponent,
-      },
-      {
-        path: 'checkout',
-        title: 'Checkout',
-        component: CheckoutComponent,
+        path: 'user',
+        children: [
+          {
+            path: 'dashboard',
+            title: 'Dashboard',
+            component: BuyerDashboardComponent
+          },
+          {
+            path: 'checkout',
+            title: 'Checkout',
+            component: CheckoutComponent
+          }
+        ],
       },
     ],
   },
+  {
+    title: 'Page Not Found',
+    path: '**',
+    component: PageNotFoundComponent
+  }
 ];

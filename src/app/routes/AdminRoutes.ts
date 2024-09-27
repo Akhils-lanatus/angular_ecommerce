@@ -6,22 +6,22 @@ import { ProductsComponent } from '../pages/products/products.component';
 
 export const AdminRoutes: Routes = [
   {
-    path: 'login',
+    path: 'admin/login',
     title: 'Admin - Login',
     component: AdminLoginComponent,
   },
   {
-    path: 'dashboard',
+    path: 'admin/dashboard',
     title: 'Admin - Dashboard',
     component: AdminDashboardComponent,
   },
   {
-    path: 'user-crud',
+    path: 'admin/user-crud',
     title: 'Admin - User Crud',
     component: UserCrudComponent,
   },
   {
-    path: 'product',
+    path: 'admin/product',
     title: 'Admin - Products',
     component: ProductsComponent,
   },
